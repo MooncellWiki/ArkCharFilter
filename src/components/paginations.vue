@@ -42,6 +42,7 @@ export default {
       this.$emit('change', { index: parseInt(this.values[0]), step: this.step })
     },
     index: function() {
+      // console.log('index update')
       this.$set(this.values, 0, this.index.toString())
     },
     step_: function(n, o) {

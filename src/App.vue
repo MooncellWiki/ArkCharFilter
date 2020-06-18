@@ -14,7 +14,41 @@
           {{ v.title }}
         </div>
         <div class="collapsible" @click="toggle(i)">
-          {{ expanded[i] ? '[折叠]' : '[展开]' }}
+          <!-- {{ expanded[i] ? '折叠' : '展开' }} -->
+          <div>
+            <svg
+              v-show="!expanded[i]"
+              t="1590476789572"
+              class="icon"
+              viewBox="0 0 1024 1024"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              p-id="6592"
+              width="24"
+              height="24"
+            >
+              <path
+                d="M500.8 604.779L267.307 371.392l-45.227 45.27 278.741 278.613L779.307 416.66l-45.248-45.248z"
+                p-id="6593"
+              ></path>
+            </svg>
+            <svg
+              v-show="expanded[i]"
+              t="1590477111828"
+              class="icon"
+              viewBox="0 0 1024 1024"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              p-id="6715"
+              width="24"
+              height="24"
+            >
+              <path
+                d="M500.8 461.909333L267.306667 695.296l-45.226667-45.269333 278.741333-278.613334L779.306667 650.026667l-45.248 45.226666z"
+                p-id="6716"
+              ></path>
+            </svg>
+          </div>
         </div>
         <div
           :ref="i"
@@ -479,7 +513,6 @@ export default {
           return has(v, arr, i1, i2)
         }
       }
-
       this.states.forEach((v1, i1) => {
         v1.forEach((v2, i2) => {
           if (v2.length !== 0) {
@@ -546,10 +579,10 @@ export default {
       })
       switch (this.order[0]) {
         case '实装顺序':
-          temp.sort((a, b) => b.sortid - a.sortid)
+          temp.sort((a, b) => a.sortid - b.sortid)
           break
         case '实装倒序':
-          temp.sort((a, b) => a.sortid - b.sortid)
+          temp.sort((a, b) => b.sortid - a.sortid)
           break
         case '名称升序':
           temp.sort((a, b) => a.zh.localeCompare(b.zh, 'zh'))
@@ -591,6 +624,7 @@ export default {
           break
       }
       console.log(temp.length)
+      // this.$set(this.page, 'index', 1)
       return temp
     },
     data: function() {
@@ -653,6 +687,18 @@ export default {
     },
     search: function() {
       console.log(this.search)
+    },
+    states: {
+      handler: function() {
+        this.$set(this.page, 'index', 1)
+      },
+      deep: true
+    },
+    order: {
+      handler: function() {
+        this.$set(this.page, 'index', 1)
+      },
+      deep: true
     }
   }
 }
@@ -666,14 +712,26 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  max-width: 1353px;
 }
 .filter {
   width: 100%;
   position: relative;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  margin-bottom: 5px;
 }
 .filter-title {
   border-left: solid rgba(0, 0, 0, 0) 0.2em;
   transition: ease 0.5s;
+  padding: 7px;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  text-indent: 0.08em;
 }
 .collapsible {
   position: absolute;
@@ -681,6 +739,16 @@ export default {
   top: 0px;
   color: blue;
   cursor: pointer;
+  letter-spacing: 0.08em;
+  text-indent: 0.08em;
+  font-weight: 700;
+  width: 29px;
+  height: 24px;
+  padding-top: 5px;
+}
+.collapsible > div:hover {
+  border-radius: 50%;
+  background-color: rgba(213, 215, 219, 0.4);
 }
 .expand-panel {
   /* transition: height 0.5s; */
@@ -691,6 +759,11 @@ export default {
   align-items: flex-start;
   justify-content: flex-start;
   flex-wrap: wrap;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  margin-bottom: 5px;
 }
 .control > :first-child {
   height: 28px;
@@ -714,6 +787,7 @@ export default {
 .mode {
   display: flex;
   flex-wrap: wrap;
+  padding: 2px 0;
 }
 .mode > div > div {
   margin: 0.3em;
@@ -737,6 +811,7 @@ input {
 }
 #pagination {
   display: flex;
+  padding: 2px 0;
 }
 .btn {
   margin: 0.3em;

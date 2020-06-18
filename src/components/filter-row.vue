@@ -73,6 +73,7 @@ export default {
   justify-content: flex-start;
   border-left: solid#4487df 0.2em;
   flex-wrap: nowrap;
+  padding: 2px;
 }
 .disabled {
   border-left: solid#ddd 0.2em;
