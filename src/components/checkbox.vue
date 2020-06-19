@@ -22,7 +22,6 @@ export default {
   },
   methods: {
     onclick: function() {
-      // console.log(event)
       if (this.value) {
         if (this.selected) {
           if (!this.atleastOne || this.value.length != 1) {

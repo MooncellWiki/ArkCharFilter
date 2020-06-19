@@ -81,7 +81,7 @@
         <div>{{ hp_ }}</div>
         <div>{{ atk_ }}</div>
         <div>{{ def_ }}</div>
-        <div>{{ row.res }}</div>
+        <div>{{ res_ }}</div>
       </div>
       <div class="data2">
         <div class="head">再部署</div>
@@ -203,6 +203,17 @@ export default {
       if (this.addpotential) {
         this.row.potential[0].forEach((v, i) => {
           if (v == 'def') {
+            result += this.row.potential[1][i]
+          }
+        })
+      }
+      return result
+    },
+    res_: function() {
+      let result = parseInt(this.row.res)
+      if (this.addpotential) {
+        this.row.potential[0].forEach((v, i) => {
+          if (v == 'res') {
             result += this.row.potential[1][i]
           }
         })

@@ -26,7 +26,7 @@
       <div class="hp">{{ hp_ }}</div>
       <div class="atk">{{ atk_ }}</div>
       <div class="def">{{ def_ }}</div>
-      <div class="res">{{ row.res }}</div>
+      <div class="res">{{ res_ }}</div>
     </div>
     <div class="data2">
       <div class="re_deploy">{{ re_deploy_ }}</div>
@@ -125,6 +125,17 @@ export default {
       }
       return result
     },
+    res_: function() {
+      let result = parseInt(this.row.res)
+      if (this.addpotential) {
+        this.row.potential[0].forEach((v, i) => {
+          if (v == 'res') {
+            result += this.row.potential[1][i]
+          }
+        })
+      }
+      return result
+    },
     cost_: function() {
       let result = parseInt(this.row.cost)
       if (this.addpotential) {
@@ -156,16 +167,15 @@ export default {
   display: flex;
   flex-wrap: nowrap;
   align-items: stretch;
-  border-bottom: 1px solid #a2a9b1;
+  margin-top: 6px;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  background-color: #f8f9fa;
 }
 .long-container > div {
-  border-right: 1px solid #a2a9b1;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.avatar {
-  border-left: 1px solid #a2a9b1;
 }
 .camp,
 .data1,

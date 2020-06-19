@@ -125,8 +125,14 @@
       ></paginations>
     </div>
     <div id="result">
-      <shead v-if="display_states[0] == '表格' && bp === 1"></shead>
-      <lhead v-else-if="display_states[0] == '表格' && bp === 2"></lhead>
+      <shead
+        v-if="display_states[0] == '表格' && bp === 1"
+        :class="{ fix: fix }"
+      ></shead>
+      <lhead
+        v-else-if="display_states[0] == '表格' && bp === 2"
+        :class="{ fix: fix }"
+      ></lhead>
       <div
         id="filter-result"
         :class="{
@@ -260,13 +266,11 @@ export default {
         step: '50'
       },
       search_: '',
-      search: ''
+      search: '',
+      fix: {}
     }
   },
   methods: {
-    log: function(event) {
-      console.log(event)
-    },
     toggle: function(i) {
       this.$set(this.expanded, i, !this.expanded[i])
       this.Cookies.set('opFilterExpandState', this.expanded, {
@@ -365,7 +369,7 @@ export default {
         return Object.freeze(temp)
       }
     )
-    console.log(this.source)
+    // console.log(this.source)
     let filters = Object.freeze(
       JSON.parse(document.getElementById('filter-filter').innerText).filters
     )
@@ -379,7 +383,6 @@ export default {
     let states = []
     filters.forEach((v1, i1) => {
       states.push([])
-      // console.log({ v1, i1 })
       v1.filter.forEach(() => {
         states[i1].push([])
       })
@@ -438,13 +441,11 @@ export default {
         let arr = data[1].split('|')
         this.search_ = arr[arr.length - 1]
         arr = arr.slice(0, -1).map(v => base64ToArr(v))
-        console.log(arr)
+        // console.log(arr)
         let i = 0
         let states = this.states
         let shortLinkMap = this.shortLinkMap
-        // let t = []
         this.states.forEach((v1, i1) => {
-          // console.log(v1.length)
           v1.forEach((v2, i2) => {
             if (arr[i].filter(v => v != '0').length != 0) {
               arr[i].forEach((v3, i3) => {
@@ -469,20 +470,56 @@ export default {
         this.bp = 0
       }
     }
-    window.onresize = (fn => {
-      let canRun = true
-      return function() {
-        if (!canRun) return
-        canRun = false
-        fn()
-        setTimeout(() => {
+    window.addEventListener(
+      'resize',
+      (fn => {
+        let canRun = true
+        return function() {
+          if (!canRun) return
+          canRun = false
           fn()
-          canRun = true
-        }, 1000)
-      }
-    })(bp)
+          setTimeout(() => {
+            fn()
+            canRun = true
+          }, 500)
+        }
+      })(bp)
+    )
     bp()
     this.isfirst = true
+    let f = () => {
+      let ele
+      if (this.bp == 1) {
+        ele = document.querySelector('#pagination')
+      } else if (this.bp === 2) {
+        ele = document.querySelector('#pagination')
+      } else {
+        return 0
+      }
+      if (
+        ele.getBoundingClientRect().top + ele.getBoundingClientRect().height <
+        0
+      ) {
+        this.fix = true
+      } else {
+        this.fix = false
+      }
+    }
+    f()
+    window.addEventListener(
+      'scroll',
+      (fn => {
+        let timeout
+        return function() {
+          if (timeout) {
+            clearTimeout(timeout)
+          }
+          timeout = setTimeout(() => {
+            fn()
+          }, 10)
+        }
+      })(f)
+    )
   },
   computed: {
     oridata: function() {
@@ -623,8 +660,7 @@ export default {
           })
           break
       }
-      console.log(temp.length)
-      // this.$set(this.page, 'index', 1)
+      // console.log(temp)
       return temp
     },
     data: function() {
@@ -641,14 +677,12 @@ export default {
           arr.push(0)
         }
         for (let i = 0; i < arr.length; i += 6) {
-          // console.log(parseInt(arr.slice(i, i + 6).join(''), 2))
           result.push(
             this._keyStr.charAt(parseInt(arr.slice(i, i + 6).join(''), 2))
           )
         }
         return result.join('')
       }
-      // console.log(arrToBase64)
       let states = this.states
       let result = []
       this.filters.forEach((v1, i1) => {
@@ -657,8 +691,6 @@ export default {
           states[i1][i2].forEach(selected => {
             temp[this.shortLinkMap[i1][i2].indexOf(selected)] = 1
           })
-          // console.log(temp)
-          // console.log(arrToBase64(temp))
           result.push(arrToBase64(temp))
         })
       })
@@ -684,9 +716,6 @@ export default {
     },
     search_: function() {
       this.debouncedUpdateSearch()
-    },
-    search: function() {
-      console.log(this.search)
     },
     states: {
       handler: function() {
@@ -719,7 +748,6 @@ export default {
   position: relative;
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
     0 1px 5px 0 rgba(0, 0, 0, 0.12);
-  border-radius: 4px;
   background-color: #f8f8f8;
   margin-bottom: 5px;
 }
@@ -732,6 +760,7 @@ export default {
   font-size: 16px;
   letter-spacing: 0.08em;
   text-indent: 0.08em;
+  background-color: #eaebee;
 }
 .collapsible {
   position: absolute;
@@ -761,9 +790,10 @@ export default {
   flex-wrap: wrap;
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
     0 1px 5px 0 rgba(0, 0, 0, 0.12);
-  border-radius: 4px;
+  /* border-radius: 4px; */
   background-color: #f8f8f8;
   margin-bottom: 5px;
+  padding: 3px;
 }
 .control > :first-child {
   height: 28px;
@@ -777,7 +807,14 @@ export default {
   justify-content: flex-start;
   vertical-align: middle;
 }
-
+#pagination :first-child,
+.mode .checkbox-container,
+.control .checkbox-container {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 .order {
   display: flex;
   /* flex-grow: 1; */
@@ -787,7 +824,7 @@ export default {
 .mode {
   display: flex;
   flex-wrap: wrap;
-  padding: 2px 0;
+  padding: 3px;
 }
 .mode > div > div {
   margin: 0.3em;
@@ -800,6 +837,17 @@ input {
   flex-grow: 1;
   height: 30px;
   min-width: 280px;
+  outline: 0;
+  border: rgba(0, 0, 0, 0.42) solid thin;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  margin: 1px;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  /* padding: 2px; */
+}
+input:focus {
+  border-color: #4487df;
 }
 .showavatar,
 .showhead {
@@ -840,5 +888,21 @@ input {
 .btns > div {
   margin: 3px;
   width: 94px;
+}
+.fix {
+  position: fixed;
+  top: 0;
+  right: 1em;
+  left: 201px;
+  z-index: 2;
+}
+@media screen and (min-width: 982px) {
+  .fix {
+    max-width: 1353px;
+    right: 1.5em;
+  }
+}
+.fix + #filter-result > div:first-child {
+  margin-top: 100px;
 }
 </style>

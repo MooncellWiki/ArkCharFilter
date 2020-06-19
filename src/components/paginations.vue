@@ -38,11 +38,9 @@ export default {
   },
   watch: {
     values: function() {
-      // console.log(this.values)
       this.$emit('change', { index: parseInt(this.values[0]), step: this.step })
     },
     index: function() {
-      // console.log('index update')
       this.$set(this.values, 0, this.index.toString())
     },
     step_: function(n, o) {
@@ -69,6 +67,10 @@ export default {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 select {
   width: 70px;

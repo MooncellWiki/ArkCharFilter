@@ -71,12 +71,14 @@ export default {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  border-left: solid#4487df 0.2em;
+  border-left: 0.2em solid #4487df;
+  animation: 1s;
   flex-wrap: nowrap;
-  padding: 2px;
+  padding: 3px;
+  background-color: #f8f9fa;
 }
 .disabled {
-  border-left: solid#ddd 0.2em;
+  border-left: 0.2em solid rgba(0, 0, 0, 0);
 }
 .checkboxs {
   display: flex;
