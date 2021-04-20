@@ -2,6 +2,7 @@
   "name": "ArkCharFilter",
   "version": "0.1.0",
   "private": true,
+  "author": "夕舞八弦 <1677759063@qq.com> (https://github.com/daflyinbed)",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -28,5 +29,14 @@
     "eslint-plugin-vue": "^6.2.2",
     "prettier": "^1.19.1",
     "vue-template-compiler": "^2.6.11"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/MooncellWiki/ArkCharFilter/issues"
+  },
+  "contributors": [
+    "夕舞八弦 <1677759063@qq.com> (https://github.com/daflyinbed)",
+    "StarHeartHunt <starheart233@gmail.com> (https://github.com/StarHeartHunt)"
+  ],
+  "homepage": "https://github.com/MooncellWiki/ArkCharFilter#readme",
+  "license": "MIT"
 }
