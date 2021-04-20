@@ -30,6 +30,13 @@
     "prettier": "^1.19.1",
     "vue-template-compiler": "^2.6.11"
   },
+  "browserslist": [
+    "> 0.05% in my stats",
+    "> 0.5% in CN",
+    "last 5 versions",
+    "since 2013",
+    "defaults"
+  ],
   "bugs": {
     "url": "https://github.com/MooncellWiki/ArkCharFilter/issues"
   },
