@@ -4,7 +4,7 @@
     class="checkbox-container"
     :class="{
       selected: selected,
-      nowidth: nowidth
+      nowidth: nowidth,
     }"
   >
     {{ title }}
@@ -18,10 +18,10 @@ export default {
     title: String,
     atleastOne: Boolean,
     onlyOne: Boolean,
-    nowidth: Boolean
+    nowidth: Boolean,
   },
   methods: {
-    onclick: function() {
+    onclick: function () {
       if (this.value) {
         if (this.selected) {
           if (!this.atleastOne || this.value.length != 1) {
@@ -45,17 +45,17 @@ export default {
           }
         }
       }
-    }
+    },
   },
   computed: {
-    selected: function() {
+    selected: function () {
       if (this.value) {
         return this.value.indexOf(this.title) !== -1
       } else {
         return false
       }
-    }
-  }
+    },
+  },
 }
 </script>
 <style scoped>

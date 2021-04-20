@@ -20,8 +20,8 @@ export default {
   props: {
     class_: String,
     rarity: String, //但是应该是数字
-    zh: String
-  }
+    zh: String,
+  },
 }
 </script>
 <style scoped>

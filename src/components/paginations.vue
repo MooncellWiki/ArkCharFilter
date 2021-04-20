@@ -23,41 +23,41 @@ import checkbox from './checkbox.vue'
 export default {
   name: 'paginations',
   components: {
-    checkbox
+    checkbox,
   },
   props: {
     length: Number,
     step: String,
-    index: Number
+    index: Number,
   },
   data: () => {
     return {
       step_: 50,
-      values: ['1']
+      values: ['1'],
     }
   },
   watch: {
-    values: function() {
+    values: function () {
       this.$emit('change', { index: parseInt(this.values[0]), step: this.step })
     },
-    index: function() {
+    index: function () {
       this.$set(this.values, 0, this.index.toString())
     },
-    step_: function(n, o) {
+    step_: function (n, o) {
       this.$emit('changestep', { n, o })
     },
-    step: function() {
+    step: function () {
       this.step_ = this.step
-    }
+    },
   },
   computed: {
-    checkboxCount: function() {
+    checkboxCount: function () {
       return Math.ceil(this.length / this.step)
-    }
+    },
   },
-  created: function() {
+  created: function () {
     this.step_ = this.step
-  }
+  },
 }
 </script>
 <style scoped>

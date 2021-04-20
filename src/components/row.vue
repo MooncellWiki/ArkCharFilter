@@ -14,7 +14,7 @@ export default {
   components: {
     card,
     long,
-    short
+    short,
   },
   props: {
     row: {
@@ -34,10 +34,10 @@ export default {
       sex: String, //性别
       position: String, //位置
       tag: Array, //词缀
-      obtain_method: Array //获得方式
+      obtain_method: Array, //获得方式
     },
-    type: Number
-  }
+    type: Number,
+  },
 }
 </script>
 <style scoped>

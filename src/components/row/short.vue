@@ -84,13 +84,13 @@ export default {
       feature: String, //特性
       obtain_method: Array, //获得方式
       trust: Array, //信赖加成
-      potential: Array //潜能加成
+      potential: Array, //潜能加成
     },
     addtrust: Boolean, //是否加算信赖
-    addpotential: Boolean //是否加算潜能
+    addpotential: Boolean, //是否加算潜能
   },
   computed: {
-    hp_: function() {
+    hp_: function () {
       let result = parseInt(this.row.hp)
       if (this.addtrust) {
         result += this.row.trust[0]
@@ -104,7 +104,7 @@ export default {
       }
       return result
     },
-    atk_: function() {
+    atk_: function () {
       let result = parseInt(this.row.atk)
       if (this.addtrust) {
         result += this.row.trust[1]
@@ -118,7 +118,7 @@ export default {
       }
       return result
     },
-    def_: function() {
+    def_: function () {
       let result = parseInt(this.row.def)
       if (this.addtrust) {
         result += this.row.trust[2]
@@ -132,7 +132,7 @@ export default {
       }
       return result
     },
-    res_: function() {
+    res_: function () {
       let result = parseInt(this.row.res)
       if (this.addpotential) {
         this.row.potential[0].forEach((v, i) => {
@@ -143,7 +143,7 @@ export default {
       }
       return result
     },
-    cost_: function() {
+    cost_: function () {
       let result = parseInt(this.row.cost)
       if (this.addpotential) {
         this.row.potential[0].forEach((v, i) => {
@@ -154,7 +154,7 @@ export default {
       }
       return result
     },
-    re_deploy_: function() {
+    re_deploy_: function () {
       let result = parseInt(this.row.re_deploy.slice(0, -1))
       if (this.addpotential) {
         this.row.potential[0].forEach((v, i) => {
@@ -164,8 +164,8 @@ export default {
         })
       }
       return result + 's'
-    }
-  }
+    },
+  },
 }
 </script>
 <style scoped>

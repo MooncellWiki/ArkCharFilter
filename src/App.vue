@@ -137,7 +137,7 @@
         id="filter-result"
         :class="{
           showhead: display_states[0] == '头像',
-          showavatar: display_states[0] == '半身像'
+          showavatar: display_states[0] == '半身像',
         }"
       >
         <template v-if="display_states[0] == '半身像'">
@@ -219,7 +219,7 @@ import paginations from './components/paginations.vue'
 const m = [
   ['class_', 'rarity', 'position', 'sex', 'obtain_method', 'tag'],
   ['phy', 'flex', 'tolerance', 'plan', 'skill', 'adapt'],
-  ['logo', 'birth_place', 'team', 'race']
+  ['logo', 'birth_place', 'team', 'race'],
 ]
 export default {
   name: 'App',
@@ -233,14 +233,14 @@ export default {
     long,
     checkbox,
     filterRow,
-    paginations
+    paginations,
   },
-  data: function() {
+  data: function () {
     return {
       states: [
         [[], [], [], [], [], []],
         [[], [], [], [], [], []],
-        [[], [], [], []]
+        [[], [], [], []],
       ],
       filters: [],
       expanded: [true, false, false],
@@ -251,7 +251,7 @@ export default {
         '名称升序',
         '名称降序',
         '稀有度升序',
-        '稀有度降序'
+        '稀有度降序',
       ],
       // modes: ['筛选', '公开招募'],
       // mode: ['筛选'],
@@ -263,18 +263,18 @@ export default {
       filter_map: [],
       page: {
         index: 1,
-        step: '50'
+        step: '50',
       },
       search_: '',
       search: '',
-      fix: {}
+      fix: {},
     }
   },
   methods: {
-    toggle: function(i) {
+    toggle: function (i) {
       this.$set(this.expanded, i, !this.expanded[i])
       this.Cookies.set('opFilterExpandState', this.expanded, {
-        expires: 365
+        expires: 365,
       })
       if (this.expanded[i]) {
         let targetHeight = 0
@@ -286,7 +286,7 @@ export default {
           { height: targetHeight },
           {
             duration: 500,
-            delay: 0
+            delay: 0,
           }
         ).then(() => {
           this.$refs[i][0].style.height = 'auto'
@@ -297,16 +297,16 @@ export default {
           { height: 0 },
           {
             duration: 500,
-            delay: 0
+            delay: 0,
           }
         )
       }
     },
-    onPageChange: function(page) {
+    onPageChange: function (page) {
       this.page = page
       this.Cookies.set('opFilterPageStep', this.page.step, { expires: 365 })
     },
-    onStepChange: function({ n, o }) {
+    onStepChange: function ({ n, o }) {
       n = parseInt(n)
       o = parseInt(o)
       if (o < n) {
@@ -319,26 +319,26 @@ export default {
       this.$set(this.page, 'step', n.toString())
       this.Cookies.set('opFilterPageStep', this.page.step, { expires: 365 })
     },
-    copyurl: function() {
+    copyurl: function () {
       if (this.isfirst) {
         this.isfirst = false
         // eslint-disable-next-line no-undef
         let clipboard = new ClipboardJS('#pagination > div.btn', {
-          text: function(trigger) {
+          text: function (trigger) {
             return trigger.getAttribute('data-clipboard-text')
-          }
+          },
         })
-        clipboard.on('success', function(e) {
+        clipboard.on('success', function (e) {
           alert('链接已复制: ' + e.text)
         })
-        clipboard.on('error', function(e) {
+        clipboard.on('error', function (e) {
           console.error({ copyUrlError: e })
         })
       }
-    }
+    },
   },
-  created: function() {
-    const getLast = str => {
+  created: function () {
+    const getLast = (str) => {
       if (str.indexOf('→') !== -1) {
         let arr = str.split('→')
         return arr[arr.length - 1]
@@ -348,7 +348,7 @@ export default {
     }
     this.source = Array.prototype.map.call(
       document.getElementById('filter-data').children,
-      v => {
+      (v) => {
         let temp = {}
         Object.assign(temp, v.dataset)
         temp.tag = temp.tag.split(' ')
@@ -356,15 +356,15 @@ export default {
         temp.cost = getLast(temp.cost)
         temp.block = getLast(temp.block)
         temp.feature = v.innerHTML
-        temp.trust = temp.trust.split(',').map(v => {
+        temp.trust = temp.trust.split(',').map((v) => {
           if (v.length !== 0) {
             return parseInt(v)
           } else {
             return 0
           }
         })
-        temp.potential = temp.potential.split('`').map(v => v.split(','))
-        temp.potential[1] = temp.potential[1].map(v => parseFloat(v))
+        temp.potential = temp.potential.split('`').map((v) => v.split(','))
+        temp.potential[1] = temp.potential[1].map((v) => parseFloat(v))
         temp.noHtmlFeature = temp.feature.replace(/<[^<>]+>/g, '')
         return Object.freeze(temp)
       }
@@ -391,11 +391,11 @@ export default {
     this.expanded = this.Cookies.getJSON('opFilterExpandState') || [
       true,
       false,
-      false
+      false,
     ]
     if (this.Cookies.get('opFilterDisplayState')) {
       this.display_states = [
-        decodeURI(this.Cookies.get('opFilterDisplayState'))
+        decodeURI(this.Cookies.get('opFilterDisplayState')),
       ]
     } else {
       this.display_states = ['表格']
@@ -410,9 +410,9 @@ export default {
     const updateSearch = () => {
       this.search = this.search_
     }
-    this.debouncedUpdateSearch = (fn => {
+    this.debouncedUpdateSearch = ((fn) => {
       let canRun = true
-      return function() {
+      return function () {
         if (!canRun) return
         canRun = false
         setTimeout(() => {
@@ -426,10 +426,10 @@ export default {
     {
       let data = /#([^#]+)#/.exec(window.location.hash)
       if (data && data[1]) {
-        const base64ToArr = str => {
+        const base64ToArr = (str) => {
           return str
             .split('')
-            .map(v => {
+            .map((v) => {
               let temp = this._keyStr.indexOf(v).toString(2)
               while (temp.length % 6 != 0) {
                 temp = '0' + temp
@@ -440,14 +440,14 @@ export default {
         }
         let arr = data[1].split('|')
         this.search_ = arr[arr.length - 1]
-        arr = arr.slice(0, -1).map(v => base64ToArr(v))
+        arr = arr.slice(0, -1).map((v) => base64ToArr(v))
         // console.log(arr)
         let i = 0
         let states = this.states
         let shortLinkMap = this.shortLinkMap
         this.states.forEach((v1, i1) => {
           v1.forEach((v2, i2) => {
-            if (arr[i].filter(v => v != '0').length != 0) {
+            if (arr[i].filter((v) => v != '0').length != 0) {
               arr[i].forEach((v3, i3) => {
                 if (v3 == '1') {
                   states[i1][i2].push(shortLinkMap[i1][i2][i3])
@@ -460,7 +460,7 @@ export default {
       }
     }
   },
-  mounted: function() {
+  mounted: function () {
     let bp = () => {
       if (this.$refs.app.offsetWidth > 900) {
         this.bp = 2
@@ -472,9 +472,9 @@ export default {
     }
     window.addEventListener(
       'resize',
-      (fn => {
+      ((fn) => {
         let canRun = true
-        return function() {
+        return function () {
           if (!canRun) return
           canRun = false
           fn()
@@ -508,9 +508,9 @@ export default {
     f()
     window.addEventListener(
       'scroll',
-      (fn => {
+      ((fn) => {
         let timeout
-        return function() {
+        return function () {
           if (timeout) {
             clearTimeout(timeout)
           }
@@ -522,21 +522,21 @@ export default {
     )
   },
   computed: {
-    oridata: function() {
+    oridata: function () {
       let temp = this.source
       let filters = this.filters
       let filter_map = this.filter_map
       const has = (v, arr, i1, i2) => {
         let a = arr
         if (i1 == 2) {
-          a = arr.map(v => filter_map[i2][v] || v).flat()
+          a = arr.map((v) => filter_map[i2][v] || v).flat()
         }
         return a.indexOf(v) !== -1
       }
       const other = (v, arr, i1, i2) => {
         if (arr.indexOf('其他') !== -1) {
           let da = filters[i1]['filter'][i2]['cbt']
-            .map(v => {
+            .map((v) => {
               if (filter_map[i2] && filter_map[i2][v]) {
                 return filter_map[i2][v]
               } else {
@@ -553,7 +553,7 @@ export default {
       this.states.forEach((v1, i1) => {
         v1.forEach((v2, i2) => {
           if (v2.length !== 0) {
-            temp = temp.filter(v3 => {
+            temp = temp.filter((v3) => {
               if (i1 == 0 && i2 == 1) {
                 //稀有度
                 return v2.indexOf('★' + (1 + parseInt(v3[m[i1][i2]]))) !== -1
@@ -569,7 +569,8 @@ export default {
                 }
               } else if (i1 == 0 && i2 == 4) {
                 return (
-                  v3[m[i1][i2]].filter(v4 => other(v4, v2, i1, i2)).length != 0
+                  v3[m[i1][i2]].filter((v4) => other(v4, v2, i1, i2)).length !=
+                  0
                 )
                 // return other(v3[m[i1][i2]], v2, i1, i2)
               } else if (i1 == 0 && i2 == 5) {
@@ -610,9 +611,9 @@ export default {
         })
       })
       let search = this.search
-      temp = temp.filter(v => {
+      temp = temp.filter((v) => {
         let tags = ['zh', 'en', 'ja', 'id', 'noHtmlFeature']
-        return tags.filter(key => v[key].indexOf(search) != -1).length != 0
+        return tags.filter((key) => v[key].indexOf(search) != -1).length != 0
       })
       switch (this.order[0]) {
         case '实装顺序':
@@ -663,12 +664,12 @@ export default {
       // console.log(temp)
       return temp
     },
-    data: function() {
+    data: function () {
       let start = (this.page.index - 1) * this.page.step
       return this.oridata.slice(start, start + this.page.step)
     },
-    url: function() {
-      const arrToBase64 = arr => {
+    url: function () {
+      const arrToBase64 = (arr) => {
         if (arr.indexOf(1) == -1) {
           return ''
         }
@@ -688,7 +689,7 @@ export default {
       this.filters.forEach((v1, i1) => {
         v1.filter.forEach((v2, i2) => {
           let temp = Array(v2.cbt.length).fill(0)
-          states[i1][i2].forEach(selected => {
+          states[i1][i2].forEach((selected) => {
             temp[this.shortLinkMap[i1][i2].indexOf(selected)] = 1
           })
           result.push(arrToBase64(temp))
@@ -703,33 +704,33 @@ export default {
         this.search +
         '#'
       )
-    }
+    },
   },
   watch: {
-    display_states: function() {
+    display_states: function () {
       this.Cookies.set('opFilterDisplayState', this.display_states[0], {
-        expires: 365
+        expires: 365,
       })
     },
-    data_type: function() {
+    data_type: function () {
       this.Cookies.set('opFilterDataType', this.data_type, { expires: 365 })
     },
-    search_: function() {
+    search_: function () {
       this.debouncedUpdateSearch()
     },
     states: {
-      handler: function() {
+      handler: function () {
         this.$set(this.page, 'index', 1)
       },
-      deep: true
+      deep: true,
     },
     order: {
-      handler: function() {
+      handler: function () {
         this.$set(this.page, 'index', 1)
       },
-      deep: true
-    }
-  }
+      deep: true,
+    },
+  },
 }
 </script>
 

@@ -6,9 +6,7 @@
     <div class="title">{{ title }}</div>
     <div class="btns">
       <button class="btn" @click="addAll">全选</button>
-      <button class="btn" @click="removeAll">
-        清除
-      </button>
+      <button class="btn" @click="removeAll">清除</button>
       <checkbox
         v-if="both"
         :key="'both'"
@@ -32,38 +30,38 @@ import checkbox from './checkbox.vue'
 export default {
   name: 'filter-row',
   components: {
-    checkbox
+    checkbox,
   },
   props: {
     title: String,
     cbt: Array,
     both: Boolean,
     nowidth: Boolean,
-    values: Array
+    values: Array,
   },
   watch: {
-    values: function() {
+    values: function () {
       this.$emit('change', this.values)
-    }
+    },
   },
   methods: {
-    removeAll: function() {
+    removeAll: function () {
       if (this.values.indexOf('同时满足') === -1) {
         this.values = []
       } else {
         this.values = ['同时满足']
       }
     },
-    addAll: function() {
-      let temp = this.cbt.map(v => v)
+    addAll: function () {
+      let temp = this.cbt.map((v) => v)
       if (this.values.indexOf('同时满足') === -1) {
         this.values = temp
       } else {
         temp.push('同时满足')
         this.values = temp
       }
-    }
-  }
+    },
+  },
 }
 </script>
 <style scoped>

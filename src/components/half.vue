@@ -45,8 +45,8 @@ export default {
     rarity: String,
     logo: String,
     zh: String,
-    en: String
-  }
+    en: String,
+  },
 }
 </script>
 <style scoped>

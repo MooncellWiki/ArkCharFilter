@@ -31,7 +31,7 @@
 </template>
 <script>
 export default {
-  name: 'shead'
+  name: 'shead',
 }
 </script>
 <style scoped>
