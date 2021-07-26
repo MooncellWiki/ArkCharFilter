@@ -3,4 +3,7 @@ build
 dist
 coverage
 
+# Ignore all HTML files:
+*.html
+
 node_modules
